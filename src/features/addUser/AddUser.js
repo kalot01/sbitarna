@@ -1,3 +1,4 @@
+//Ce fichier consiste à ajouter un employé
 import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import "./AddUser.css";
@@ -21,7 +22,7 @@ import { setUsername } from "../../redux/slices/userSlice";
 
 export default function Adduser() {
   const dispatch = useDispatch();
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(false); //on utilise les use states pour creer des "states" pour stocker les données du formulaire
   const history = useHistory();
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
@@ -33,6 +34,7 @@ export default function Adduser() {
   const [role, setRole] = useState("");
 
   const addUser = (event) => {
+    //fonction d'ajout d utilisateur
     event.preventDefault();
     if (password != confirmPassword) {
       alert("wrong password confirmation");
@@ -41,7 +43,7 @@ export default function Adduser() {
     } else {
       axiosInstance
         .post(
-          `users/`,
+          `users/`, //requete post au backend pour ajoute rl utilisateur
           {
             email: email,
             password: password,
@@ -53,24 +55,24 @@ export default function Adduser() {
           },
           {
             headers: {
-              Authorization: window.sessionStorage.getItem("id_token"),
+              Authorization: window.sessionStorage.getItem("id_token"), //header pour gerer les permissions au backend
             },
           }
         )
         .then((response) => response.data)
         .then((data) => {
           if (data.err) {
-            alert(data.err);
+            alert(data.err); //erreur au niveau du backend
           } else if (data.success) {
-            alert(data.msg);
+            alert(data.msg); //succes
           }
         })
         .catch((err) => {
-          alert(err);
+          alert(err); //cas d erreur de transmission de données
         });
     }
   };
-
+  //le code suivant définit l'interface
   return (
     <div className="addUserContainer">
       {loading ? (
