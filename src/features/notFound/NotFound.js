@@ -1,7 +1,6 @@
-import React, { useState } from "react";
-import Loader from 'react-loader-spinner';
+import React from "react";
 import "./NotFound.css";
-import pagenotfound from "./pagenotfound.png";
+import pagenotfound from "../../assets/pagenotfound.png";
 
 export default function NotFound() {
   return (

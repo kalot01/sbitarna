@@ -1,16 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import "./Login.css";
-import Loading from "../loading/Loading";
-import { axiosInstance } from "../../App";
-import { useSelector, useDispatch } from "react-redux";
-import {
-  setUsername,
-  setRole,
-  setState,
-  selectUsername,
-  selectRole,
-} from "../../redux/slices/userSlice";
+import Loading from "../../loading/Loading";
+import { axiosInstance } from "../../../App";
+import { useDispatch } from "react-redux";
 
 export default function Login() {
   const dispatch = useDispatch();
@@ -40,6 +33,7 @@ export default function Login() {
           setLoading(false);
           alert(data.err);
         } else {
+          //on va ajouter notre token dans la session du navigateur pour utiliser les permissions au niveau du backend pour la protection des informations
           window.sessionStorage.setItem("id_token", data.token);
           window.sessionStorage.setItem("expires", data.expires);
           window.sessionStorage.setItem("role", data.role);

@@ -1,19 +1,14 @@
 import React, { useState, useEffect } from "react";
-import { useHistory } from "react-router-dom";
 import "./Users.css";
 import Loading from "../loading/Loading";
 import { axiosInstance } from "../../App";
 import { useSelector, useDispatch } from "react-redux";
 import {
   setHeaders,
-  addRow,
   removeRow,
   setData,
   removeData,
   removeHeaders,
-  setSelected,
-  selectHeaders,
-  selectData,
   selectSelected,
 } from "../../redux/slices/tableViewSlice";
 import TableView from "../tableView/TableView";
@@ -21,7 +16,6 @@ import TableView from "../tableView/TableView";
 export default function Users() {
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(true);
-  const history = useHistory();
   const selectedUser = useSelector(selectSelected);
   const headers = [
     { name: "email", flex: 5 },

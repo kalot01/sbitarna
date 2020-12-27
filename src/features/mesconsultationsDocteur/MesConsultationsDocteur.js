@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
-import "./LesConsultations.css";
+import "./MesConsultationsDocteur.css";
 import Loading from "../loading/Loading";
 import { axiosInstance } from "../../App";
 import { useSelector, useDispatch } from "react-redux";
 import {
   setHeaders,
+  setRow,
   setData,
   removeData,
   removeHeaders,
@@ -13,21 +14,20 @@ import {
 } from "../../redux/slices/tableViewSlice";
 import TableView from "../tableView/TableView";
 
-export default function LesConsultations() {
+export default function MesConsultationsDocteur() {
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(true);
   const history = useHistory();
-  const selectedUser = useSelector(selectSelected);
+  const selectedConsultation = useSelector(selectSelected);
   const headers = [
     { name: "dateConsultation", flex: 5 },
-    { name: "nomMedecin", flex: 2 },
-    { name: "idPatient", flex: 2 },
+    { name: "nomPatient", flex: 2 },
     { name: "tarifs", flex: 2 },
     { name: "statut", flex: 3 },
   ];
   useEffect(() => {
     axiosInstance
-      .get("consultations", {
+      .get("consultations/docme", {
         headers: {
           Authorization: window.sessionStorage.getItem("id_token"),
         },
@@ -66,16 +66,43 @@ export default function LesConsultations() {
       dispatch(removeHeaders());
     };
   }, []);
+  const RealiserMaConsultation = () => {
+    axiosInstance
+      .delete(`consultations/rea/${selectedConsultation}`, {
+        headers: {
+          Authorization: window.sessionStorage.getItem("id_token"),
+        },
+      })
+      .then((response) => response.data)
+      .then((data) => {
+        if (data.err) {
+          alert(data.err);
+        } else if (data.success) {
+          dispatch(
+            setRow({
+              id: selectedConsultation,
+              content: { statut: "réalisée" },
+            })
+          );
+        }
+      })
+      .catch((err) => {
+        alert(err);
+      });
+  };
 
   return loading ? (
-    <div className="lesConsultationsContainer">
+    <div className="mesConsultationsDocteurContainer">
       <Loading color="#0e5686" />
     </div>
   ) : (
-    <div className="lesConsultationsContainer">
-      <div className="lesConsultationsTitle">Les Consultations</div>
-      <div className="lesConsultationsTableContainer">
+    <div className="mesConsultationsDocteurContainer">
+      <div className="mesConsultationsDocteurTitle">Mes Consultations</div>
+      <div className="mesConsultationsDocteurTableContainer">
         <TableView />
+      </div>
+      <div className="mesConsultationsDocteurDeleteContainer">
+        <button onClick={RealiserMaConsultation}>Réaliser</button>
       </div>
     </div>
   );

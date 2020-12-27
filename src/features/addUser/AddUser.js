@@ -4,21 +4,7 @@ import { useHistory } from "react-router-dom";
 import "./AddUser.css";
 import Loading from "../loading/Loading";
 import { axiosInstance } from "../../App";
-import { useSelector, useDispatch } from "react-redux";
-import {
-  setHeaders,
-  addRow,
-  removeRow,
-  setData,
-  removeData,
-  removeHeaders,
-  setSelected,
-  selectHeaders,
-  selectData,
-  selectSelected,
-} from "../../redux/slices/tableViewSlice";
-import TableView from "../tableView/TableView";
-import { setUsername } from "../../redux/slices/userSlice";
+import { useDispatch } from "react-redux";
 
 export default function Adduser() {
   const dispatch = useDispatch();
@@ -76,7 +62,7 @@ export default function Adduser() {
   return (
     <div className="addUserContainer">
       {loading ? (
-        <Loading color="white" />
+        <Loading color="#1369a3" />
       ) : (
         <form className="addUserForm" onSubmit={addUser}>
           <div>

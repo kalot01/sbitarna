@@ -1,34 +1,23 @@
 import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import "./DashboardUser.css";
-import Loading from "../loading/Loading";
-import { axiosInstance } from "../../App";
-import { useSelector, useDispatch } from "react-redux";
-import { Route, Switch, Redirect, Link } from "react-router-dom";
-import {
-  setUsername,
-  setRole,
-  setState,
-  selectUsername,
-  selectRole,
-} from "../../redux/slices/userSlice";
+import { useDispatch } from "react-redux";
+import { Route, Switch, Link } from "react-router-dom";
 import NotFound from "../notFound/NotFound";
-import Users from "../users/Users";
-import Doctors from "../doctors/Doctors";
-import Pharmaciens from "../pharmaciens/Pharmaciens";
-import AddUser from "../addUser/AddUser";
 import Logo from "../../assets/People-Patient-Male-icon.png";
 import MesConsultations from "../mesconsultations/MesConsultations";
+import MesOrdonnances from "../mesordonnances/MesOrdonnances";
 export default function DashboardUser() {
-  const username = useSelector(selectUsername);
   const dispatch = useDispatch();
   const history = useHistory();
   const [selected, setSelected] = useState(null);
   useEffect(() => {}, []);
 
   const signout = () => {
+    //supprimer les tokens de la session pour lancer la deconnexion
     window.sessionStorage.removeItem("id_token");
-    window.sessionStorage.removeItem("username");
+    window.sessionStorage.removeItem("prenom");
+    window.sessionStorage.removeItem("nom");
     window.sessionStorage.removeItem("role");
     window.sessionStorage.removeItem("expires");
     window.location.reload();
@@ -47,7 +36,11 @@ export default function DashboardUser() {
             Sbitarna
           </div>
           <img className="dashboardUserLogo" src={Logo}></img>
-          <div className="dashboardUserUsername">{username}</div>
+          <div className="dashboardUserUsername">
+            {window.sessionStorage.getItem("prenom") +
+              " " +
+              window.sessionStorage.getItem("nom")}
+          </div>
         </div>
         <div className="dashboardUserMenus">
           <ul>
@@ -73,6 +66,17 @@ export default function DashboardUser() {
                 Mes Consultations
               </Link>
             </li>
+            <li
+              className={selected == 2 ? "dashboardUserMenuSelected" : ""}
+              onClick={() => {
+                setSelected(2);
+              }}
+            >
+              <Link className="dashboardUserLink" to="/mesordonnances">
+                <i className="fas fa-file-medical"></i>
+                Mes Ordonnances
+              </Link>
+            </li>
           </ul>
         </div>
         <div className="dashboardUserLogout" onClick={signout}>
@@ -83,9 +87,10 @@ export default function DashboardUser() {
       <div className="dashboardUserContent">
         <Switch>
           <Route exact path="/"></Route>
-          <Route exact path="/reserver">
-            <Doctors />
+          <Route exact path="/mesordonnances">
+            <MesOrdonnances />
           </Route>
+          <Route exact path="/reserver"></Route>
           <Route exact path="/mesconsultations">
             <MesConsultations />
           </Route>

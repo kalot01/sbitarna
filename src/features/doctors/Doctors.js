@@ -6,14 +6,10 @@ import { axiosInstance } from "../../App";
 import { useSelector, useDispatch } from "react-redux";
 import {
   setHeaders,
-  addRow,
   removeRow,
   setData,
   removeData,
   removeHeaders,
-  setSelected,
-  selectHeaders,
-  selectData,
   selectSelected,
 } from "../../redux/slices/tableViewSlice";
 import TableView from "../tableView/TableView";

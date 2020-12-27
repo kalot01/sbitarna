@@ -1,11 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./TableView.css";
 import {
-  setHeaders,
-  addRow,
-  removeRow,
-  setData,
-  removeData,
   setSelected,
   sortBy,
   selectHeaders,

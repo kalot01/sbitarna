@@ -1,20 +1,13 @@
 import React from "react";
-import logo from "./logo.svg";
-import { Counter } from "./features/counter/Counter";
 import "./App.css";
-import Login from "./features/login/Login";
-import Signup from "./features/signup/Signup";
+import Login from "./features/Authentification/login/Login";
+import Signup from "./features/Authentification/signup/Signup";
 import Dashboard from "./features/dashboard/Dashboard";
-import {
-  BrowserRouter as Router,
-  Route,
-  Switch,
-  Redirect,
-} from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import axios from "axios";
 
 export let axiosInstance = axios.create({
-  baseURL: "http://51.75.253.157:9001/api",
+  baseURL: "http://51.75.253.157:9001/api", //declaration des API du backend
   headers: {
     "Content-Type": "application/json",
   },
@@ -22,6 +15,7 @@ export let axiosInstance = axios.create({
 
 function App() {
   return (
+    //Gerer le routing entre connexion inscription et les tableaux de board
     <div className="App">
       <Router>
         <Switch>

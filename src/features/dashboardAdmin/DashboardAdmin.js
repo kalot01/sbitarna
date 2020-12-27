@@ -1,17 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import "./DashboardAdmin.css";
-import Loading from "../loading/Loading";
-import { axiosInstance } from "../../App";
-import { useSelector, useDispatch } from "react-redux";
-import { Route, Switch, Redirect, Link } from "react-router-dom";
-import {
-  setUsername,
-  setRole,
-  setState,
-  selectUsername,
-  selectRole,
-} from "../../redux/slices/userSlice";
+
+import { useDispatch } from "react-redux";
+import { Route, Switch, Link } from "react-router-dom";
 import NotFound from "../notFound/NotFound";
 import Users from "../users/Users";
 import Doctors from "../doctors/Doctors";
@@ -22,15 +14,16 @@ import LesConsultations from "../lesconsultations/LesConsultations";
 import Logo from "../../assets/admin.png";
 
 export default function DashboardAdmin() {
-  const username = useSelector(selectUsername);
   const dispatch = useDispatch();
   const history = useHistory();
   const [selected, setSelected] = useState(null);
   useEffect(() => {}, []);
 
   const signout = () => {
+    //supprimer les tokens de la session pour lancer la deconnexion
     window.sessionStorage.removeItem("id_token");
-    window.sessionStorage.removeItem("username");
+    window.sessionStorage.removeItem("nom");
+    window.sessionStorage.removeItem("prenom");
     window.sessionStorage.removeItem("role");
     window.sessionStorage.removeItem("expires");
     window.location.reload();
@@ -49,7 +42,11 @@ export default function DashboardAdmin() {
             Sbitarna
           </div>
           <img className="dashboardAdminLogo" src={Logo}></img>
-          <div className="dashboardAdminUsername">{username}</div>
+          <div className="dashboardAdminUsername">
+            {window.sessionStorage.getItem("prenom") +
+              " " +
+              window.sessionStorage.getItem("nom")}
+          </div>
         </div>
         <div className="dashboardAdminMenus">
           <ul>

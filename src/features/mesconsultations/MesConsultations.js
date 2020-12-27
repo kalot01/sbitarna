@@ -6,15 +6,10 @@ import { axiosInstance } from "../../App";
 import { useSelector, useDispatch } from "react-redux";
 import {
   setHeaders,
-  addRow,
-  removeRow,
   setRow,
   setData,
   removeData,
   removeHeaders,
-  setSelected,
-  selectHeaders,
-  selectData,
   selectSelected,
 } from "../../redux/slices/tableViewSlice";
 import TableView from "../tableView/TableView";
@@ -51,7 +46,13 @@ export default function MesConsultations() {
                     ? "en attente"
                     : el.statut == "a"
                     ? "annulée"
-                    : "réalisée",
+                    : "réalisée", //formater le statut de la consultation
+                dateConsultation: el.dateConsultation
+                  .split("Z")[0]
+                  .split("T")
+                  .join(" at ")
+                  .split(".")[0],
+                tarifs: el.tarifs + " DT", // formater le text de la consultation
               };
             })
           )

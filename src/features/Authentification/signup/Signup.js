@@ -1,16 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import "./Signup.css";
-import Loading from "../loading/Loading";
-import { axiosInstance } from "../../App";
-import { useSelector, useDispatch } from "react-redux";
-import {
-  setUsername,
-  setRole,
-  setState,
-  selectUsername,
-  selectRole,
-} from "../../redux/slices/userSlice";
+import Loading from "../../loading/Loading";
+import { axiosInstance } from "../../../App";
+import { useDispatch } from "react-redux";
 
 export default function Signup() {
   const dispatch = useDispatch();
@@ -33,10 +26,11 @@ export default function Signup() {
   const signup = (event) => {
     event.preventDefault();
     if (password != confirmPassword) {
-      alert("wrong password confirmation");
+      alert("wrong password confirmation"); //on va verifier le mot de passe et sa confirmation
     } else {
       axiosInstance
         .post(`/users/signup`, {
+          //envois des données au serveur de back-end
           email: email,
           password: password,
           nom: nom,
