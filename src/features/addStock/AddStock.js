@@ -4,7 +4,7 @@ import { useHistory } from "react-router-dom";
 import "./AddStock.css";
 import Loading from "../loading/Loading";
 import { axiosInstance } from "../../App";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 
 export default function AddStock() {
   const dispatch = useDispatch();
